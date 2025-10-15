@@ -22,6 +22,25 @@ app.get('/mahasiswa', (req, res) => {
         res.json(results);
     });
 });
+// GET /mahasiswa - return all mahasiswa
+app.get('/mahasiswa', (req, res) => {
+    const sql = 'SELECT * FROM mahasiswa';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('DB error on SELECT:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.json(results);
+    });
+});
+
+// POST /mahasiswa - create new mahasiswa
+app.post('/mahasiswa', (req, res) => {
+    const { nama, alamat, agama } = req.body;
+    // basic validation
+    if (!nama || !alamat || !agama) {
+        return res.status(400).json({ error: 'nama, alamat, and agama are required' });
+    }
 
 
 
