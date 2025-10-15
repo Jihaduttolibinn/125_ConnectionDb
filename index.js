@@ -4,11 +4,24 @@ const PORT = process.env.PORT || 3000;
 
 
 const app = express();
+// parse JSON bodies
 app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 })
+
+// GET /mahasiswa - return all mahasiswa
+app.get('/mahasiswa', (req, res) => {
+    const sql = 'SELECT * FROM mahasiswa';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('DB error on SELECT:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.json(results);
+    });
+});
 
 
 
